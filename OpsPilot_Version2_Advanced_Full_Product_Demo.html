@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>OpsPilot AI - Advanced Full Product Demo</title>
+<style>
+:root{
+  --bg:#f4f7fb;--card:#ffffff;--ink:#101828;--muted:#667085;--line:#e6eaf0;
+  --brand:#4f46e5;--brand2:#0ea5e9;--green:#079455;--amber:#b54708;--red:#d92d20;
+  --soft:#eef2ff;--soft2:#ecfeff;--dark:#111827;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
+.app{max-width:520px;margin:0 auto;background:#f8fafc;min-height:100vh;padding-bottom:92px}
+.hero{background:linear-gradient(135deg,#111827,#4f46e5 55%,#0ea5e9);color:#fff;padding:22px 18px 20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px}
+.top{display:flex;align-items:center;gap:12px}
+.logo{width:58px;height:58px;border-radius:18px;background:#fff;color:#4f46e5;display:grid;place-items:center;font-weight:900;font-size:24px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+h1{font-size:25px;line-height:1.05;margin:0}.sub{font-size:14px;opacity:.9;margin-top:5px}
+.herochips{display:flex;gap:8px;overflow:auto;margin-top:16px}.chip{white-space:nowrap;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);padding:8px 10px;border-radius:999px;font-size:13px}
+main{padding:14px}.screen{display:none}.screen.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 8px 22px rgba(16,24,40,.06)}
+h2{font-size:22px;margin:0 0 8px}h3{font-size:17px;margin:0 0 8px}p{color:var(--muted);line-height:1.42;margin:7px 0}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kpi{background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:13px}.kpi b{font-size:25px;display:block;margin-top:5px}.kpi small{color:var(--muted)}
+.badge{display:inline-block;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:800}.new{background:#ecfdf3;color:#067647}.book{background:#eff6ff;color:#175cd3}.follow{background:#fff7ed;color:#b54708}.lost{background:#fef3f2;color:#b42318}
+.btn{width:100%;border:0;border-radius:16px;padding:14px 14px;background:var(--brand);color:#fff;font-size:16px;font-weight:800;margin-top:10px}.btn.secondary{background:#fff;color:var(--brand);border:1px solid #c7d2fe}.btn.green{background:var(--green)}
+.row{display:flex;gap:10px;align-items:center}.between{justify-content:space-between}.muted{color:var(--muted);font-size:13px}.big{font-size:34px;font-weight:900;color:var(--green)}
+.chatbox{height:360px;overflow:auto;border:1px solid var(--line);border-radius:20px;background:#fbfdff;padding:12px}.msg{max-width:87%;padding:11px 13px;border-radius:18px;margin:9px 0;line-height:1.35;font-size:15px}.ai{background:#eef2ff;border-top-left-radius:6px}.user{background:#dcfce7;margin-left:auto;border-top-right-radius:6px}
+.quick{display:flex;gap:8px;overflow-x:auto;padding:10px 0}.quick button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#111827;border-radius:999px;padding:10px 12px;font-weight:700}
+input,select,textarea{width:100%;padding:13px;margin:7px 0;border:1px solid var(--line);border-radius:14px;background:#fff;font-size:16px}textarea{min-height:80px}
+.lead{border:1px solid var(--line);border-radius:18px;padding:13px;margin:9px 0;background:#fff}.lead b{font-size:16px}.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:10px}.actions button{border:1px solid var(--line);border-radius:12px;padding:9px 6px;background:#f8fafc;font-weight:800;font-size:12px}
+.timeline{position:relative;margin-top:10px}.titem{display:grid;grid-template-columns:38px 1fr;gap:10px;margin:12px 0}.dot{width:34px;height:34px;border-radius:50%;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-weight:900}.tbox{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:12px}
+.check{list-style:none;padding:0;margin:0}.check li{padding:8px 0;border-bottom:1px solid #f0f2f5}.check li:before{content:"✅ ";}.warn li:before{content:"➡️ "}.no li:before{content:"❌ "}
+.table{width:100%;border-collapse:collapse}.table td{padding:10px 6px;border-bottom:1px solid #f1f2f4}.table td:last-child{text-align:right;font-weight:800}
+.nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);max-width:520px;width:100%;display:grid;grid-template-columns:repeat(8,1fr);gap:2px;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:7px 4px calc(7px + env(safe-area-inset-bottom));backdrop-filter:blur(12px)}
+.nav button{border:0;background:transparent;color:#667085;border-radius:13px;padding:7px 1px;font-size:10px;font-weight:700}.nav button.active{background:var(--soft);color:var(--brand)}.nav span{display:block;font-size:19px;margin-bottom:2px}
+.progress{height:10px;background:#eef2f7;border-radius:999px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,#4f46e5,#0ea5e9);border-radius:999px}
+.service{display:flex;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0;background:#fff}
+.notice{background:#fffbeb;border:1px solid #fedf89;color:#92400e;border-radius:16px;padding:12px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hero">
+    <div class="top">
+      <div class="logo">AI</div>
+      <div>
+        <h1>OpsPilot AI<br>Full Product Demo</h1>
+        <div class="sub">What a clinic receives after setup</div>
+      </div>
+    </div>
+    <div class="herochips">
+      <div class="chip">🏥 Beauty Med London</div>
+      <div class="chip">💬 AI receptionist</div>
+      <div class="chip">📋 Lead dashboard</div>
+      <div class="chip">🔧 Setup included</div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="card">
+        <h2>Clinic command centre</h2>
+        <p>This is the full version a clinic owner would receive after the system is customized and installed.</p>
+        <div class="kpis">
+          <div class="kpi"><small>Today’s leads</small><b id="kLead">12</b></div>
+          <div class="kpi"><small>Booking requests</small><b>4</b></div>
+          <div class="kpi"><small>Confirmed</small><b>3</b></div>
+          <div class="kpi"><small>Missed leads</small><b>0</b></div>
+        </div>
+        <button class="btn" onclick="go('chat')">Test AI receptionist</button>
+      </div>
+      <div class="card">
+        <h3>What the clinic gets</h3>
+        <ul class="check">
+          <li>AI chat for website enquiries</li>
+          <li>Lead capture form</li>
+          <li>Lead management dashboard</li>
+          <li>Booking request screen</li>
+          <li>Monthly reports</li>
+          <li>Detailed installation and monthly support</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="chat" class="screen">
+      <div class="card">
+        <h2>AI receptionist</h2>
+        <p>Tap common clinic questions to see how the AI replies.</p>
+        <div id="chatbox" class="chatbox">
+          <div class="msg ai">Hello 👋 Welcome to Beauty Med London. I can help with treatments, prices, opening hours, location and consultation requests.</div>
+        </div>
+        <div class="quick">
+          <button onclick="ask('I want Botox')">Botox</button>
+          <button onclick="ask('How much are lip fillers?')">Prices</button>
+          <button onclick="ask('Can I book a consultation?')">Book</button>
+          <button onclick="ask('Where are you located?')">Location</button>
+          <button onclick="ask('Are you open Saturday?')">Hours</button>
+        </div>
+        <input id="freeText" placeholder="Type your own question">
+        <button class="btn" onclick="askFree()">Send message</button>
+      </div>
+    </section>
+
+    <section id="capture" class="screen">
+      <div class="card">
+        <h2>Lead capture</h2>
+        <p>The AI collects the important details and sends them to the clinic.</p>
+        <input id="leadName" value="Sarah" placeholder="Name">
+        <input id="leadPhone" value="07123 456789" placeholder="Phone">
+        <input id="leadEmail" value="sarah@example.com" placeholder="Email">
+        <select id="leadService">
+          <option>Botox consultation</option>
+          <option>Lip fillers</option>
+          <option>HydraFacial</option>
+          <option>Skin consultation</option>
+        </select>
+        <input id="leadTime" value="Friday afternoon" placeholder="Preferred date/time">
+        <textarea id="leadNotes" placeholder="Notes">First-time customer. Wants price guidance and consultation.</textarea>
+        <button class="btn green" onclick="saveLead()">Save lead and notify clinic</button>
+        <p id="saveMsg" class="muted"></p>
+      </div>
+      <div class="notice">In the real product, this can send the lead to email, Google Sheet, CRM, WhatsApp, or the clinic’s booking system.</div>
+    </section>
+
+    <section id="leads" class="screen">
+      <div class="card">
+        <div class="row between"><h2>Lead pipeline</h2><span class="badge new" id="totalLeads">12 leads</span></div>
+        <p>Reception staff can see who needs follow-up.</p>
+        <div id="leadList">
+          <div class="lead"><div class="row between"><b>Sarah</b><span class="badge new">New</span></div><p>Botox consultation - Friday afternoon</p><div class="actions"><button>Contacted</button><button>Booked</button><button>Lost</button></div></div>
+          <div class="lead"><div class="row between"><b>John</b><span class="badge book">Booked</span></div><p>Skin consultation - Monday 10am</p><div class="actions"><button>Contacted</button><button>Booked</button><button>Lost</button></div></div>
+          <div class="lead"><div class="row between"><b>Emma</b><span class="badge follow">Follow-up</span></div><p>Lip fillers - asked about price</p><div class="actions"><button>Contacted</button><button>Booked</button><button>Lost</button></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="booking" class="screen">
+      <div class="card">
+        <h2>Booking requests</h2>
+        <p>The AI does not need to force a confirmed appointment. It can collect booking requests for the clinic to approve.</p>
+        <div class="service"><div><b>Sarah</b><br><span class="muted">Botox consultation</span></div><span class="badge new">Fri PM</span></div>
+        <div class="service"><div><b>John</b><br><span class="muted">Skin consultation</span></div><span class="badge book">Mon 10am</span></div>
+        <div class="service"><div><b>Amira</b><br><span class="muted">HydraFacial</span></div><span class="badge follow">Wed 2pm</span></div>
+        <button class="btn secondary">Connect to Calendly / clinic booking system</button>
+      </div>
+      <div class="card">
+        <h3>Notification example</h3>
+        <p><b>New lead:</b> Sarah<br>Service: Botox consultation<br>Phone: 07123 456789<br>Preferred time: Friday afternoon</p>
+      </div>
+    </section>
+
+    <section id="reports" class="screen">
+      <div class="card">
+        <h2>Monthly report</h2>
+        <p>A simple report helps the clinic understand the value.</p>
+        <table class="table">
+          <tr><td>Enquiries captured</td><td>45</td></tr>
+          <tr><td>Consultation requests</td><td>18</td></tr>
+          <tr><td>Booked appointments</td><td>9</td></tr>
+          <tr><td>Estimated value</td><td>£2,700</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Lead conversion</h3>
+        <div class="row between"><span>Enquiry → consultation</span><b>40%</b></div>
+        <div class="progress"><div class="bar" style="width:40%"></div></div>
+        <div class="row between" style="margin-top:10px"><span>Consultation → booking</span><b>50%</b></div>
+        <div class="progress"><div class="bar" style="width:50%"></div></div>
+      </div>
+    </section>
+
+    <section id="settings" class="screen">
+      <div class="card">
+        <h2>Clinic knowledge base</h2>
+        <p>This is where the AI gets its answers. The creator sets this up for the clinic.</p>
+        <h3>Services and example prices</h3>
+        <div class="service"><span>Botox consultation</span><b>From £250</b></div>
+        <div class="service"><span>Lip fillers</span><b>From £220</b></div>
+        <div class="service"><span>HydraFacial</span><b>From £120</b></div>
+        <h3>Opening hours</h3>
+        <p>Mon-Fri 9am-6pm<br>Saturday 10am-4pm<br>Sunday closed</p>
+        <h3>FAQ examples</h3>
+        <ul class="check">
+          <li>How much is Botox?</li>
+          <li>Can I book a consultation?</li>
+          <li>Where are you located?</li>
+          <li>Do you take deposits?</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="setup" class="screen">
+      <div class="card">
+        <h2>Detailed setup journey</h2>
+        <p>This answers the clinic owner’s question: “What happens after I pay?”</p>
+        <div class="timeline">
+          <div class="titem"><div class="dot">1</div><div class="tbox"><b>Client signs</b><p>Clinic agrees to the setup fee and support plan.</p></div></div>
+          <div class="titem"><div class="dot">2</div><div class="tbox"><b>Welcome checklist</b><p>Owner sends logo, services, prices, opening hours, website and booking link.</p></div></div>
+          <div class="titem"><div class="dot">3</div><div class="tbox"><b>Branding setup</b><p>Demo becomes the clinic’s version with real name, colors and services.</p></div></div>
+          <div class="titem"><div class="dot">4</div><div class="tbox"><b>AI training</b><p>Creator adds FAQ answers, treatment information and safe reply rules.</p></div></div>
+          <div class="titem"><div class="dot">5</div><div class="tbox"><b>Website install</b><p>Creator or freelancer adds the AI chat button to the clinic website.</p></div></div>
+          <div class="titem"><div class="dot">6</div><div class="tbox"><b>Lead delivery</b><p>New leads go to dashboard, email, Google Sheet or CRM.</p></div></div>
+          <div class="titem"><div class="dot">7</div><div class="tbox"><b>Testing</b><p>Creator tests Botox, fillers, booking, opening hours and lead capture.</p></div></div>
+          <div class="titem"><div class="dot">8</div><div class="tbox"><b>Go live</b><p>AI is turned on and real customers can use it.</p></div></div>
+          <div class="titem"><div class="dot">9</div><div class="tbox"><b>Monthly support</b><p>Updates, fixes, monitoring, new services and monthly report.</p></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Creator vs business owner</h3>
+        <div class="kpis">
+          <div class="kpi"><small>Creator</small><b>Builds</b><p>Customizes, installs, tests and supports.</p></div>
+          <div class="kpi"><small>Owner</small><b>Approves</b><p>Sends info, gives access, follows up leads.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roi" class="screen">
+      <div class="card">
+        <h2>ROI and pricing</h2>
+        <p>The clinic pays if the system helps them recover enquiries and create appointments.</p>
+        <div class="kpis">
+          <div class="kpi"><small>Extra enquiries</small><b>10</b></div>
+          <div class="kpi"><small>Bookings</small><b>3</b></div>
+          <div class="kpi"><small>Avg value</small><b>£300</b></div>
+          <div class="kpi"><small>Potential revenue</small><b>£900</b></div>
+        </div>
+        <p class="muted">Example only. Real results depend on traffic, offer, staff follow-up and clinic pricing.</p>
+      </div>
+      <div class="card">
+        <h3>Starter pricing example</h3>
+        <table class="table">
+          <tr><td>Setup fee</td><td>£500-£1,000</td></tr>
+          <tr><td>Monthly support</td><td>£100-£250</td></tr>
+          <tr><td>Future advanced package</td><td>£2,000+</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Monthly support includes</h3>
+        <ul class="check">
+          <li>Update services and prices</li>
+          <li>Improve AI answers</li>
+          <li>Fix technical issues</li>
+          <li>Check lead flow</li>
+          <li>Send simple performance report</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <nav class="nav">
+    <button id="nav-home" class="active" onclick="go('home')"><span>🏠</span>Home</button>
+    <button id="nav-chat" onclick="go('chat')"><span>💬</span>AI</button>
+    <button id="nav-capture" onclick="go('capture')"><span>📝</span>Lead</button>
+    <button id="nav-leads" onclick="go('leads')"><span>📋</span>CRM</button>
+    <button id="nav-booking" onclick="go('booking')"><span>📅</span>Book</button>
+    <button id="nav-reports" onclick="go('reports')"><span>📊</span>Report</button>
+    <button id="nav-setup" onclick="go('setup')"><span>🔧</span>Setup</button>
+    <button id="nav-roi" onclick="go('roi')"><span>💷</span>ROI</button>
+  </nav>
+</div>
+
+<script>
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  const nb=document.getElementById('nav-'+id); if(nb) nb.classList.add('active');
+  window.scrollTo(0,0);
+}
+function response(text){
+  const t=text.toLowerCase();
+  if(t.includes('botox')) return "Botox usually starts from £250 in this demo clinic. I can collect your details so the team can confirm the best option and offer a consultation.";
+  if(t.includes('filler') || t.includes('price')) return "Lip fillers start from £220 in this demo. Prices depend on treatment choice, so I can pass your details to the clinic for confirmation.";
+  if(t.includes('book') || t.includes('consult')) return "Absolutely. Please share your name, phone, email, treatment and preferred time. The clinic team can confirm availability.";
+  if(t.includes('where') || t.includes('location')) return "Beauty Med London is the example clinic. In a real client version, this shows the clinic’s real address and map link.";
+  if(t.includes('open') || t.includes('hour') || t.includes('saturday')) return "Example hours: Mon-Fri 9am-6pm, Saturday 10am-4pm, Sunday closed.";
+  return "I can help with treatment questions, pricing guidance, opening hours and booking requests. Would you like me to collect your details?";
+}
+function add(text, cls){
+  const box=document.getElementById('chatbox');
+  const el=document.createElement('div'); el.className='msg '+cls; el.textContent=text;
+  box.appendChild(el); box.scrollTop=box.scrollHeight;
+}
+function ask(text){ add(text,'user'); setTimeout(()=>add(response(text),'ai'),250); }
+function askFree(){ const v=document.getElementById('freeText').value.trim(); if(!v)return; document.getElementById('freeText').value=''; ask(v); }
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+function saveLead(){
+  const n=document.getElementById('leadName').value||'New customer';
+  const s=document.getElementById('leadService').value;
+  const tm=document.getElementById('leadTime').value||'No time selected';
+  const lead=document.createElement('div');
+  lead.className='lead';
+  lead.innerHTML='<div class="row between"><b>'+esc(n)+'</b><span class="badge new">New</span></div><p>'+esc(s)+' - '+esc(tm)+'</p><div class="actions"><button>Contacted</button><button>Booked</button><button>Lost</button></div>';
+  document.getElementById('leadList').prepend(lead);
+  const k=document.getElementById('kLead'); k.textContent=parseInt(k.textContent)+1;
+  document.getElementById('totalLeads').textContent=k.textContent+' leads';
+  document.getElementById('saveMsg').textContent='Saved. Tap CRM to see the new lead.';
+}
+</script>
+</body>
+</html>
