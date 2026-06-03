@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpsPilot AI - Full Product Demo</title>
+<style>
+body{font-family:Arial;margin:0;background:#f4f6f8}
+header{background:#4f46e5;color:white;padding:20px;text-align:center}
+.container{max-width:500px;margin:auto;padding:12px}
+.card{background:white;border-radius:14px;padding:15px;margin:10px 0;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:flex;overflow:auto}
+.nav button{flex:1;padding:12px;border:none;background:white}
+.page{display:none}.active{display:block}
+.badge{background:#dcfce7;padding:4px 8px;border-radius:20px}
+input,select,button{width:100%;padding:10px;margin-top:8px}
+.mainbtn{background:#4f46e5;color:white;border:none;border-radius:8px}
+</style>
+</head>
+<body>
+<header>
+<h2>🏥 OpsPilot AI - Full Product Demo</h2>
+<p>What a clinic actually receives</p>
+</header>
+
+<div class="container">
+
+<div id="dashboard" class="page active">
+<div class="card"><h3>Dashboard</h3>
+<p>Today's Leads: <b>12</b></p>
+<p>Bookings Requested: <b>4</b></p>
+<p>Appointments Confirmed: <b>3</b></p>
+<p>Missed Leads: <b>0</b></p>
+</div>
+</div>
+
+<div id="chat" class="page">
+<div class="card">
+<h3>AI Receptionist</h3>
+<p><b>Customer:</b> I want Botox</p>
+<p><b>AI:</b> I'd be happy to help. Can I ask a few questions?</p>
+<input placeholder="Name">
+<input placeholder="Phone">
+<input placeholder="Email">
+<select><option>Botox</option><option>Lip Fillers</option></select>
+<button class="mainbtn">Submit Enquiry</button>
+</div>
+</div>
+
+<div id="leads" class="page">
+<div class="card">
+<h3>Lead Management</h3>
+<p>Sarah - Botox <span class="badge">New</span></p>
+<p>John - Lip Fillers <span class="badge">Booked</span></p>
+<p>Emma - Consultation <span class="badge">Contacted</span></p>
+</div>
+</div>
+
+<div id="booking" class="page">
+<div class="card">
+<h3>Booking Requests</h3>
+<p>Monday 10am</p>
+<p>Tuesday 2pm</p>
+<p>Wednesday 11am</p>
+<button class="mainbtn">Request Consultation</button>
+</div>
+</div>
+
+<div id="reports" class="page">
+<div class="card">
+<h3>Monthly Report</h3>
+<p>45 enquiries</p>
+<p>18 consultations</p>
+<p>9 bookings</p>
+</div>
+</div>
+
+<div id="setup" class="page">
+<div class="card">
+<h3>Setup Journey</h3>
+<p>Client Signs</p>
+<p>↓</p>
+<p>Information Collection</p>
+<p>↓</p>
+<p>Branding Setup</p>
+<p>↓</p>
+<p>AI Training</p>
+<p>↓</p>
+<p>Website Installation</p>
+<p>↓</p>
+<p>Testing</p>
+<p>↓</p>
+<p>Go Live</p>
+<p>↓</p>
+<p>Monthly Support</p>
+</div>
+
+<div class="card">
+<h3>Creator Responsibilities</h3>
+<ul>
+<li>Customize branding</li>
+<li>Train AI answers</li>
+<li>Install website chat</li>
+<li>Connect lead capture</li>
+<li>Test everything</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Business Owner Responsibilities</h3>
+<ul>
+<li>Provide logo</li>
+<li>Provide services</li>
+<li>Provide website access</li>
+<li>Approve final setup</li>
+<li>Follow up on leads</li>
+</ul>
+</div>
+</div>
+
+<div id="roi" class="page">
+<div class="card">
+<h3>ROI Example</h3>
+<p>10 extra enquiries</p>
+<p>↓</p>
+<p>3 appointments booked</p>
+<p>↓</p>
+<p>£300 average value</p>
+<p>↓</p>
+<h2>£900 Revenue</h2>
+</div>
+</div>
+
+</div>
+
+<div class="nav">
+<button onclick="show('dashboard')">🏠</button>
+<button onclick="show('chat')">💬</button>
+<button onclick="show('leads')">📝</button>
+<button onclick="show('booking')">📅</button>
+<button onclick="show('reports')">📊</button>
+<button onclick="show('setup')">⚙️</button>
+<button onclick="show('roi')">💷</button>
+</div>
+
+<script>
+function show(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
